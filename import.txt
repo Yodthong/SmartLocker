@@ -1,0 +1,19 @@
+import time
+from pyfingerprint.pyfingerprint import PyFingerprint
+import RPi.GPIO as gpio
+
+RS =18
+EN =23
+D4 =24
+D5 =25
+D6 =8
+D7 =7
+
+enrol=5
+delet=6
+inc=13
+dec=19
+led=26
+
+HIGH=1
+LOW=0
