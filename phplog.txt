@@ -1,0 +1,35 @@
+<?PHP
+ $user=@$_POST['username'];
+ $pass=@$_POST['password'];
+ /*
+ $user ="dog";
+ $pass = "passcat";
+ */
+ 
+ if ($user==''){
+ echo "no user";
+ exit();
+ 	
+ }//end if
+ if ($pass==''){
+ 	echo "no password";
+	exit();
+ }//end if
+ 
+ //127.0.0.1
+ $con = mysqli_connect("localhost","root","","test");
+ $sql ="select * from tbl_user where uname='$user' and upass= '$pass'";
+ $result = mysqli_query($con,$sql) or die(mysqli_error(). "<hr/>Line: ". __LINE__ ."<br/>$sql");
+  
+ $rs = mysqli_fetch_array($result, MYSQLI_NUM);
+ if ($rs[0]==0){
+ 	echo "can't login error user or password";
+ }else{
+	echo "OK_PASS";
+ }//end if
+  
+  
+ mysqli_free_result($result); 
+ mysqli_close($con);
+ 
+?>
