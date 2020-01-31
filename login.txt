@@ -1,67 +1,90 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthConstants } from '../../config/auth-constants';
-import { AuthService } from './../../services/auth.service';
-import { StorageService } from './../../services/storage.service';
-import { ToastService } from './../../services/toast.service';
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginFragment">
 
-@Component({
-  selector: 'app-login',
-  templateUrl: './login.page.html',
-  styleUrls: ['./login.page.scss']
-})
-export class LoginPage implements OnInit {
-  postData = {
-    username: '',
-    password: ''
-  };
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:textSize="50sp"
+        android:fontFamily="@font/indigo_daisy"
+        android:layout_marginStart="25dp"
+        android:layout_marginBottom="10dp"
+        android:layout_above="@id/tv_subtitle"/>
 
-  constructor(
-    private router: Router,
-    private authService: AuthService,
-    private storageService: StorageService,
-    private toastService: ToastService
-  ) {}
+    <TextView
+        android:id="@+id/tv_subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tag"
+        android:textSize="17sp"
+        android:fontFamily="@font/roboto_regular"
+        android:layout_marginStart="25dp"
+        android:layout_marginBottom="50dp"
+        android:layout_above="@id/et_email"/>
 
-  ngOnInit() {
+    <EditText
+        android:id="@+id/et_email"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="@string/e_mail"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:padding="15dp"
+        android:inputType="textEmailAddress"
+        android:fontFamily="@font/roboto_regular"
+        android:layout_above="@id/et_password"
+        android:background="@drawable/et_custom"
+        android:textSize="15sp" />
 
-  }
+    <EditText
+        android:id="@+id/et_password"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="@string/password"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:padding="15dp"
+        android:fontFamily="@font/roboto_regular"
+        android:inputType="textPassword"
+        android:layout_centerInParent="true"
+        android:background="@drawable/et_custom"
+        android:textSize="15sp" />
 
-  validateInputs() {
-    console.log(this.postData);
-    let username = this.postData.username.trim();
-    let password = this.postData.password.trim();
-    return (
-      this.postData.username &&
-      this.postData.password &&
-      username.length > 0 &&
-      password.length > 0
-    );
-  }
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/et_password"
+        android:background="@drawable/btn_custom"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="15dp"
+        android:fontFamily="@font/roboto_regular"
+        android:textColor="@android:color/white"
+        android:text="@string/login"/>
 
-  loginAction() {
-    if (this.validateInputs()) {
-      this.authService.login(this.postData).subscribe(
-        (res: any) => {
-          if (res.userData) {
-            // Storing the User data.
-            this.storageService
-              .store(AuthConstants.AUTH, res.userData)
-              .then(res => {
-                this.router.navigate(['home']);
-              });
-          } else {
-            this.toastService.presentToast('Incorrect username and password.');
-          }
-        },
-        (error: any) => {
-          this.toastService.presentToast('Network Issue.');
-        }
-      );
-    } else {
-      this.toastService.presentToast(
-        'Please enter email/username or password.'
-      );
-    }
-  }
-}
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/ic_arrow_right"
+        android:layout_above="@id/swipeRight"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:id="@+id/swipeRight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/swipe_left_for_register"
+        android:textSize="15sp"
+        android:fontFamily="@font/roboto_regular"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"/>
+
+</RelativeLayout>
