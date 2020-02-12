@@ -1,0 +1,43 @@
+class Stack:
+    def __init__(self,list = None):
+        if list == None :
+            self.item = []
+        else :
+            self.item = list
+    def isEmpty(self):
+        return self.item == []
+    def push(self,data):
+        self.item.append(data)
+    def pop(self):
+        return self.item.pop()
+    def peek(self):
+        return self.item[-1]
+    def size(self):
+        return len(self.item)
+
+def postfix(inputs):
+    operation = '+-*/'
+    stack = Stack()
+    token = list(inputs.split())
+    for a in token :
+        if a not in operation :
+            stack.push(a)
+            continue
+
+        op1,op2 = int(stack.pop()),int(stack.pop())
+
+        if a == '+' :
+            stack.push(op2 + op1)
+        elif a == '+':
+            stack.push(op2 - op1)
+        elif a == '*':
+            stack.push(op2 * op1)
+        elif a == '/':
+            stack.push(op2 // op1)
+
+    return str(stack.pop())
+
+inputs = input("Postfix :")
+print("Resual :"+postfix(inputs))
+
+
